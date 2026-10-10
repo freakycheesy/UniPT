@@ -7,12 +7,13 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Camera myCamera;
     private Vector2 camDirection;
+    private RaycastHit[] results = new RaycastHit[5];
     public float speed = 1f;
     public float defaultFOV = 50f;
     public float zoomFOV = 30f;
-    public bool isMoving => Input.GetAxis("Vertical") > 0f || Input.GetAxis("Horizontal") > 0f;
-    public bool isZooming => Input.GetButton("Zoom");
-    public bool isLooking => Input.GetAxis("Mouse X") > 0f || Input.GetAxis("Mouse Y") > 0f;
+    public bool isMoving => MyInput.GetMove().magnitude > 0;
+    public bool isZooming => myCamera.fieldOfView < defaultFOV;
+    public bool isLooking => MyInput.GetLook().magnitude > 0;
     public bool isMovingAll => isMoving || isLooking && (SystemInfo.supportsGyroscope && Input.gyro.userAcceleration.magnitude > 0.1f);
     // Start is called before the first frame update
     void Start()
@@ -35,17 +36,32 @@ public class PlayerController : MonoBehaviour
 
         if(!isMoving)
         {
-            if (MyInput.GetZoom()) myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, zoomFOV, Time.deltaTime * speed);
+            if (MyInput.GetZoom().IsPressed()) { 
+                myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, zoomFOV, Time.deltaTime * speed); 
+                if(myCamera.fieldOfView < zoomFOV + 10f) Interact(Interactable.InteractionType.Zoom, Mathf.Infinity);
+            }
             else myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, defaultFOV, Time.deltaTime * speed);
         }
         else
         {
             myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, defaultFOV, Time.deltaTime * speed);
+            Interact(Interactable.InteractionType.Look, Mathf.Infinity);
         }
 
-        if (MyInput.GetInteractDown())
+        if (MyInput.GetInteract().WasPressedThisFrame())
         {
+            Interact(Interactable.InteractionType.Click);
+        }
+    }
 
+    public void Interact(Interactable.InteractionType type, float maxDistance = 5f)
+    {
+        for(int i = 0; i< Physics.RaycastNonAlloc(myCamera.transform.position, myCamera.transform.forward, results, maxDistance); i++)
+        {
+            if(results[i].transform.TryGetComponent(out Interactable interactable))
+            {
+                interactable.Interact(type);
+            }
         }
     }
 }

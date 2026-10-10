@@ -11,7 +11,7 @@
                     "type": "Value",
                     "id": "2519cdd1-1ae8-4664-94b4-71e8bd583947",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "StickDeadzone(min=0.3,max=1)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -20,7 +20,7 @@
                     "type": "Value",
                     "id": "546617e5-0e00-46d7-a549-7a39e007acbb",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "StickDeadzone(min=0.3,max=1)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -34,7 +34,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact1",
+                    "name": "Zoom",
                     "type": "Button",
                     "id": "a72e15bf-c333-4405-af7a-f60a51e5d5b5",
                     "expectedControlType": "",
@@ -146,33 +146,22 @@
                 {
                     "name": "",
                     "id": "e2b7c570-1f46-4ed6-9c9d-6ccd8c461923",
-                    "path": "<Keyboard>/x",
+                    "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact1",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "91ad2d0f-bff5-417b-957d-aaa7f713c139",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6557fd07-7913-48d9-951d-959c93dacd91",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact1",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

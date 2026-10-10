@@ -12,12 +12,8 @@ public class MyInput : MonoBehaviour
         Action.Enable();
     }
     public static InputActionMap Action { get; private set; }
-    public static Vector2 GetMove() => new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-    public static Vector2 GetLook() => new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-    public static bool GetZoom() => Input.GetButton("Zoom");
-    public static bool GetZoomDown() => Input.GetButtonDown("Zoom");
-    public static bool GetZoomUp() => Input.GetButtonUp("Zoom");
-    public static bool GetInteract() => Input.GetButton("Interact");
-    public static bool GetInteractDown() => Input.GetButtonDown("Interact");
-    public static bool GetInteractUp() => Input.GetButtonUp("Interact");
+    public static Vector2 GetMove() => Action["Move"].ReadValue<Vector2>();
+    public static Vector2 GetLook() => Action["Look"].ReadValue<Vector2>();
+    public static InputAction GetZoom() => Action["Zoom"];
+    public static InputAction GetInteract() => Action["Interact"];
 }
