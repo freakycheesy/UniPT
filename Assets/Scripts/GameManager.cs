@@ -19,4 +19,9 @@ public class GameManager : MonoBehaviour
         currentController = reader.ReadInt32();
 
     }
+
+    public void BeginGame()
+    {
+
+    }
 }

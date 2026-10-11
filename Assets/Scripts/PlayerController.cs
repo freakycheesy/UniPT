@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     private CharacterController controller;
     private Camera myCamera;
     private Vector2 camDirection;
@@ -16,6 +17,10 @@ public class PlayerController : MonoBehaviour
     public bool isLooking => MyInput.GetLook().magnitude > 0;
     public bool isMovingAll => isMoving || isLooking && (SystemInfo.supportsGyroscope && Input.gyro.userAcceleration.magnitude > 0.1f);
     // Start is called before the first frame update
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         controller = GetComponent<CharacterController>();
